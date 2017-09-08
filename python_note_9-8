@@ -1,0 +1,5 @@
+#！/usr/bin/env python
+# -*- utf-8 -*-
+'Note'
+[x for x in os.listdir(r'd:\python') if os.path.isfile("d:\\python\\" + x) and  os.path.splitext("d:\\python\\" + x)[1]=='.py']
+#从D：\python文件夹中取出所有格式为.py的文件
