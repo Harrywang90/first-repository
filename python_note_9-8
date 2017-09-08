@@ -7,10 +7,7 @@
 
 import os
 
-def do_dir(name):
-    for x in os.listdir('.') :
-		    if os.path.isdir(x):
-				    return do_dir(
-		    elif os.path.isfile(x) and name in x :
-		    do_dir(name)
-		    
+def do_dir(path,name):
+    for x in os.listdir('.'):
+        if os.path.isdir(x):
+	    
