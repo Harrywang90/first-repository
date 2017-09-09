@@ -12,5 +12,7 @@ def do_dir(path,name):
         if os.path.isdir(x):
 	    do_dir(os.path.join(path, x), name)
 	elif os.path.basename(x).find(name) !=-1:
-	    print(os.path.join(path, x)
+	    print(os.path.join(path, x)）
+	    
+do_dir('.','a')
 	    
