@@ -8,6 +8,9 @@
 import os
 
 def do_dir(path,name):
-    for x in os.listdir('.'):
+    for x in os.listdir(path):
         if os.path.isdir(x):
+	    do_dir(os.path.join(path, x), name)
+	elif os.path.basename(x).find(name) !=-1:
+	    print(os.path.join(path, x)
 	    
