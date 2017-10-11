@@ -1,0 +1,25 @@
+#!/usr/bin/env Python3
+# -*- coding:utf-8 -*-
+
+def traversal(No_old):
+
+    f_now = open('extension_now.txt', 'r')
+
+    for number_now in f_now.readlines():
+        No_now = number_now[1:5]
+        if No_now == No_old:
+            print('对应新号码：')
+            print(number_now)
+    f_now.close()
+    '''定义一个函数，用参数遍历list2的每一个元素与之比较，输出list2的相应值'''
+
+
+f_old = open('old_location.txt', 'r')
+
+for number_old in f_old.readlines():
+    No_old = number_old[-6:-2]
+    print('旧号码： %s' % (number_old))
+    traversal(No_old)  # 遍历取出list1中的元素作为参数代入上面的函数做比较'''
+    print('''============================''')
+
+f_old.close()
