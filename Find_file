@@ -1,0 +1,35 @@
+# -*- coding:utf-8 -*-
+
+import easygui as g
+import sys
+import os
+
+
+#letter = str(input('请输入要查找所包含字母：'))
+letter = g.enterbox('请输入要查找文件所包含字母：', 'Finding...')
+L =[]
+
+
+def Finder(letter):
+
+    absdir = os.getcwd()
+    
+    
+    for s in os.listdir(absdir):
+        if os.path.isdir(s):
+            os.chdir(s)
+            Finder(letter)
+            os.chdir(absdir)
+        if os.path.isfile(s):
+            if letter in s:
+                resault = absdir +'\\' + s
+                print(absdir+'\\'+s)
+                L.append(resault)
+
+    L.append('搜索结束')
+    L.append('结果为以上')
+
+    g.choicebox('在当前路径下找到满足条件的文件如下：', 'Resault', L)
+    sys.exit(0)
+
+Finder(letter)
