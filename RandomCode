@@ -1,4 +1,4 @@
-
+#前提安装 pip install pillow
 
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
