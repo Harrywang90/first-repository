@@ -1,0 +1,23 @@
+
+from PIl import Image, ImageDraw, ImageFont
+
+def add_num(img):	
+	draw = ImageDraw.Draw(img)
+	myfont = ImageFont.truetype('字体所在路径', size = 140) #字体所在路径与字体size
+	fillcolor = '#ff0000' #字体颜色
+	
+	weight, heigh = img.size #获取图片的size，为了定位添加文本的坐标
+	
+	draw.text((weight-90, heigh-90), 'NUM', font = myfont, fill = fillcolor) #位置坐标，内容，字体， 颜色
+	
+	image.save('保存位置路径', 'jpeg') #保存图片及注意格式
+	
+	return 0 
+	
+	
+if __name__ == '__main__':
+	image = Image.open('图片')
+	add_num(image)
+
+	
+		
