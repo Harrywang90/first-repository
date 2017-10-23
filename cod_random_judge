@@ -50,4 +50,24 @@ for i in range(16):
 	Re += random.choice(select)
 print(Re)
 
+
+'''随机生成激活码，版本2'''
+
+import random, string
+
+def generate_code(count, lenth):
+
+    select = string.ascii_letters + '012345678'
+    f=open('code2.txt', 'w')
+    for i in range(count):
+        Re = ''
+        for l in range(lenth):
+            Re += random.choice(select)
+        f.writelines(Re+'\n')
+    f.close()
+    
+generate_code(400, 30)
+
+
+    
 	
