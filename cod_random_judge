@@ -1,0 +1,53 @@
+
+'''随机生成16位激活码200个，和判断输入的激活码是否在这200里'''
+
+import random
+
+def gen_ran():
+    n = 0
+    l=''
+    while n <16:
+        for i in chr(random.randint(48,122)):
+            l = l + i
+            n +=1
+    return l 
+
+
+f = open('code.txt', 'w')
+
+for i in range(200):
+    f.write(gen_ran())
+    f.write('\n')
+
+f.close()
+
+
+'''随机生成激活码'''
+
+
+code = str(input('请输入你的激活码或优惠券（16位码）：'))
+#print(code)
+f = open('code.txt', 'r')
+L =[]
+for l in f.readlines():
+    L.append(l)
+
+if code+'\n' in L :
+    print('你的激活码（%s）可用！' % code)
+else:
+    print('你的激活码不可用，请重新输入。')
+
+f.close()
+
+'''判断输入的激活码是否可用'''
+
+'''UPDATE'''
+'''随机生成字符可以这样写'''
+import random, string
+select = string.ascii_letters + '0123456789'
+Re = ''
+for i in range(16):
+	Re += random.choice(select)
+print(Re)
+
+	
