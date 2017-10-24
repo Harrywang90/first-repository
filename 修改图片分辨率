@@ -1,0 +1,31 @@
+
+
+import os
+from PIL import Image
+
+dirname = input('请输入检索文件夹')
+
+os.chdir(dirname)
+m = os.listdir()
+L=[]
+for i in m :
+    if '.jpg' or '.png' in i:
+        L.append(i)
+    else:
+        pass
+print(L)
+
+for i in L:
+    img = Image.open(i)
+    if max(img.size) > 1136:
+        value = 1136/max(img.size)
+        newsize = (int(img.size[0] * value), int(img.size[1] *value))
+
+        newpic = img.resize(newsize, Image.ANTIALIAS)
+        newpic.save('NEW_' + i)
+        
+    else:
+        print('Avaliable %s ' % i)
+   
+            
+
