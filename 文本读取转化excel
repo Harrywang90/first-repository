@@ -1,0 +1,31 @@
+'''纯文本文件 student.txt为学生信息, 里面的内容（包括花括号）如下所示：
+{
+    "1":["张三",150,120,100],
+    "2":["李四",90,99,95],
+    "3":["王五",60,66,68]
+}
+请将上述内容写到 student.xls 文件中'''
+'''excel 操作模块 xlwt   pip install xlwt, xlrd'''
+
+
+import os
+import json
+import xlwt
+
+#filepath = ''
+
+#os.chdir(filepath)
+
+with open('student.txt' ) as f:
+    content  = f.read()
+
+d = json.loads(content)
+file = xlwt.Workbook()
+
+table = file.add_sheet('test')
+for row, i in enumerate(list(d)):
+    table.write(row, 0, i)
+    for col, j in enumerate(d[i]):
+        table.write(row, col + 1, j)
+file.save('student.xls')
+
