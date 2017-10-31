@@ -1,0 +1,68 @@
+#!/usr/bin/env python 
+# -*- encoding: utf-8 -*-
+
+'''统计写过的代码行数'''
+
+import os
+
+basedir = input('请输入代码所在目录')
+
+def get_line(file):#定义获取单个文件行数
+	with open(file, 'r', encoding='utf-8') as f:#注意编码方式UTF-8
+		fileline = f.readlines()#获取文件list在此没有排除掉空行
+	count = 0#若要排除空行
+	for i in fileline:#可在此加条件判断 if i !='' and i !='\n'
+		count +=1
+	return count
+	
+def get_file(dir):
+	
+	os.chdir(dir)
+	
+	for i in os.listdir():
+		if os.path.isfile(i) and os.path.splitext(i)[1] == '.py':
+			print('文件 %15s 包含代码行数 %s.' % (i, get_line(i)))
+		elif os.path.isdir(i):
+			get_file(i)
+	os.chdir(os.path.split(os.getcwd())[0])#别忘了跳出当前目录
+			
+if __name__ == '__main__':
+	get_file(basedir)
+	
+'''此方法有待改进增加统计全部行数的办法'''
+'''一下是另一种思路'''
+
+#!/usr/bin/env python 
+# -*- encoding: utf-8 -*-
+
+'''统计写过的代码行数'''
+
+import os
+basedir =input('请输入代码所在目录')
+
+def get_line(file):
+	with open(file, 'r', encoding= 'utf-8') as f:
+		line = f.readlines()
+	count=0
+	for i in line:
+		if i != '' and i !='\n':
+			count +=1
+	return count
+
+def get_file(dir):
+	
+	filelist = []
+	
+	for root, dirs, files in os.walk(dir):
+		for file in files:
+			if os.path.splitext(file)[1] == '.py':
+				filelist.append(os.path.join(root, file))
+	return filelist
+			
+if __name__ == '__main__':
+	total = 0
+	for file in get_file(basedir):
+		print('文件 %35s 包含代码行数-------- %s ' % (file, get_line(file)))
+		total = total + get_line(file)
+	print('总行数total为------- %s' % total)#测试下来可行！
+		
