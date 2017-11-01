@@ -1,0 +1,147 @@
+'''第一题# l = [1, 2, 3, 1, 2, 3, 2, 4]# 排序从大到小# 过滤相同的数,相同的个数越多,排在前面# 个数相同,元素值大的,排在前面'''
+
+l.sort() #[1, 1, 2, 2, 2, 3, 3, 4] 排序
+list(set(l)) #[1, 2, 3, 4] 去重
+
+
+# 第二题# 题目：有1、2、3、4个数字，能组成多少个互不相同且无重复数字的三位数？都是多少？# 
+
+for i in range(1,5):
+	for j in range(1,5):
+		for k in range(1,5):
+			if i!=j and j !=k and i!=k:
+				count +=1
+				print(i,j,k)
+				
+				
+# 第三题# 题目：一个整数，它加上100后是一个完全平方数，再加上168又是一个完全平方数，请问该数是多少？#
+
+ok = lambda n : n**0.5 == int(n **0.5)#判断是否n是完全平方数
+print([ x for x in range(100000) if ok(x+100) and ok(x +268)])#打印一个列表生成式，生成满足三个条件的列表
+
+
+# 第四题# 题目：输入某年某月某日，判断这一天是这一年的第几天？## 特殊情况，闰年且输入月份大于3时需考虑多加一天。
+
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+import re
+year, month, day = re.split(r'[- ]', input('请输入年月日（格式：年-月-日）:'))
+months1 = [31,28,31,30,31,30,31,31,30,31,30,31]
+months2 = [31,29,31,30,31,30,31,31,30,31,30,31]
+d=0
+for i in range(int(month)-1):
+    if int(year)%4 ==0 and int(year)%100 != 0 or int(year) ==0:#判断闰年
+        d += months2[i]
+    else:
+        d += months1[i]
+d += int(day)
+print(d)    
+        
+
+# 第五题# 台阶问题/斐波纳挈# 一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+
+'''方法一'''
+def climbstairs(n):
+
+	if n ==1 or n ==2:
+		return n
+	else:
+		return climbstairs(n-1) + climbstairs(n-2)
+#缺点 虽然代码简单，但效率低，会超出时间上限
+
+'''方法二'''
+
+def climbstairs(n):
+
+	if n ==1 or n ==2:
+		return n
+	a=1;b=2;c=3
+	for i in range(3, n+1):
+		c=a+b;a=b;b=c
+	return c
+#用循环代替了上面的递归，效率提高
+
+'''方法三'''
+def climbStairs(self, n):
+        def fact(n):
+            result=1
+            for i in range(1,n+1):
+                result*=i
+            return result
+        total=0
+        for i in range(n/2+1):
+            total+=fact(i+n-2*i)/fact(i)/fact(n-2*i)
+        return total
+		
+		#没看懂
+		
+		
+'''方法四'''
+
+def fib(n):
+	a, b = 0,1
+	for i in range(n):
+		a, b = b , a+b
+	return b
+	
+
+第六题# 变态台阶问题# 一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。#
+
+
+class Solution(object):
+
+	def jumpFloor(self, number):
+		ans = [0,1,2]
+		for i in range(3, number+1):
+			sum =1
+			for j in range(1, i):
+				sum +=ans[j]
+			ans.append(sum)
+		return ans[number]
+		
+# 第七题# 矩形覆盖# 我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。# 请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩
+形，总共有多少种方法？# 第2*n个矩形的覆盖方法等于第2*(n-1)加上第2*(n-2)的方法。
+
+class Solution:
+    def rectCover(self, number):
+        # write code here
+        num=[]
+        num.append(0)
+        num.append(1)
+        num.append(2)
+        for i in range(3 , number+1):
+            num.append(num[i-1]+num[i-2])
+        return num[number]
+		
+#斐波那契的变形～
+
+
+# 第八题# 杨氏矩阵查找# 在一个m行n列二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序# 
+请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数# 1 2 3# 2 3 4# 3 4 5
+
+def get_arr(m,n):
+	L = []
+	for i in range(m):
+		tmp =[]
+		for j in range(1, n+1)
+			res = i + j
+			tmp.append(res)
+		L.append(tmp)
+	return L
+	
+'''
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
