@@ -1,0 +1,49 @@
+
+import urllib
+import urllib.request
+from collections import deque
+import re
+
+url = 'http://www.zhihu.com'
+
+headers = {
+    'Connection': 'Keep-Alive',
+    'Accept': 'text/html, application/xhtml+xml, */*',
+    'Accept-Language': 'en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko'
+}
+
+queue = deque()
+visited = set()
+
+queue.append(url)
+cnt =0
+
+while queue:
+    url = queue.popleft()
+    visited |= {url}
+    print('已经抓取：' + str(cnt) + '    正在抓去<--------  ' + url)
+    cnt +=1
+    if url == '//link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Fa%25C3%25A0_di_Bruno%27s_formula':
+        pass
+    elif url == '/Portal/Account/Login?returnUrl=http%3A%2F%2Fzhihu.zhiye.com%2F%2Fhome':
+        pass
+    else:
+
+
+        req = urllib.request.Request(url, headers = headers)
+        respo = urllib.request.urlopen(req)
+        if 'html' not in respo.getheader('Content-Type'):
+            continue
+        try:
+            data = respo.read().decode('utf-8')
+        except:
+            continue
+        
+        linkre = re.compile('href=\"(.+?)\"')
+        for x in linkre.findall(data):
+            if 'http' in x and x not in visited:
+                queue.append(x)
+                print('加入队列-----> ' + x)
+
+
