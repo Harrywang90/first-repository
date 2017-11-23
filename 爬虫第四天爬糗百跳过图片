@@ -30,3 +30,89 @@ for item in items:
 
 #以上为爬取的核心代码，下面增加交互对象操作
 
+#/usr/bin/env python3
+# -*- coding:utf-8 -*-
+
+__author__ = 'King'
+
+import urllib
+import urllib.request
+import re
+import time
+import _thread
+
+class QSBK(object):
+
+    def __init__(self):
+        self.pageIndex =1
+        self.headers = {'User-Agent'  : 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
+        #存放段子的变量，每一个元素是每一页的段子们
+        self.stories=[]
+        #存放程序是否继续运行的变量
+        self.enable=False
+
+    def getPage(self,pageIndex):#输入页数（索引号）获取页面代码
+        try:
+            url = 'http://www.qiushibaike.com/hot/page/' + str(pageIndex)
+            request = urllib.request.Request(url, headers = self.headers)
+            response = urllib.request.urlopen(request)
+            pageCode = response.read().decode('utf-8')
+            return pageCode
+        except urllib.request.URLError as e:
+            if hasattr(e, 'reason'):
+                print('链接失败，错误原因', e.reason)
+                return None
+
+    def getpageItems(self,pageIndex):#传入页数（索引号）获取不带图片的段子列表
+        pageCode = self.getPage(pageIndex)#先不加self试试
+        if not pageCode:
+            print('页面加载失败...')
+            return None
+        pattern = re.compile(r'<div.*?class="author.*?>.*?<h2>(.*?)</h2>.*?<span>(.*?)</span>.*?</a>(.*?)class="number">(.*?)</i>',re.S)
+        items = re.findall(pattern, pageCode)
+        pageStories = []#存每页的段子们
+        for item in items:
+            haveImg = re.search("img", item[2])#判断是否有图片
+            if not haveImg:
+                pageStories.append([item[0].strip(), item[1].strip(), item[3].strip()])
+        return pageStories
+
+    def loadPage(self):
+        if self.enable == True:
+            if len(self.stories) <2:#未看的页数小于2
+                pageStories = self.getpageItems(self.pageIndex)#获取当前页的所有段子
+                if pageStories:
+                    self.stories.append(pageStories)#当前页段子以一个元素加到stories大集合中
+                    self.pageIndex +=1#索引书加一等待下次读取
+
+    def getOnestory(self,pageStories,page):#每次回车输出一个段子
+
+        for story in pageStories:
+            inpu=input()
+            self.loadPage()
+            if inpu == 'Q':#程序结束运行
+                self.enable = False
+                return
+            print('作者：%s\n 内容：%s\n 点赞数：%s\n' % (story[0], story[1], story[2]))
+
+    def start(self):
+        print('正在读取糗事百科，按回车查看新段子，Q退出')
+        self.enable = True#程序开始运行
+        self.loadPage()
+        nowPage =0
+        while self.enable:
+            if len(self.stories)>0:
+                pageStories = self.stories[0]
+                nowPage +=1
+                del self.stories[0]
+                self.getOnestory(pageStories,nowPage)
+
+
+
+spider = QSBK()
+spider.start()
+        
+            
+        
+
+                
