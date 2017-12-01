@@ -1,0 +1,8 @@
+with open('access_log.txt', 'r') as f:
+	res ={}
+	for l in f:
+		arr = l.split()
+		id = arr[0]
+		url=arr[6]
+		status=arr[8]
+		res[(id,url,status)] = res.get((id,url,status), 0)+1
