@@ -1,0 +1,54 @@
+#请输入星期几的第一个字母来判断一下是星期几，如果第一个字母一样，则继续判断第二个字母。
+
+week = {'M':'Monday', 'T':{'u': 'Tuesday', 'h': 'Thursday'}, 'W': 'Wednesday', 'F': 'Friday', 'S': {'a': 'Saturday', 'u': 'Sunday'}}
+
+def whiday():
+	d=input('Please input which day:').upper()
+	if d in week:
+		if d== 'T' or d== 'S':
+			dd=input('Please input the second letter:')
+			print(week[d][dd])
+		else:
+			print(week[d])
+	else:
+		print('There no complire')
+		
+
+#判断100以内的素数
+
+def is_prime(n):
+    for i in range(2,n):
+        if n % i == 0:
+            return False
+    return True
+    
+if __name__ == '__main__':
+    primes = [i for i in range(2,100) if is_prime(i)]
+    print(primes)
+    
+求一个3*3矩阵主对角线元素之和。
+
+import re
+stopword = ''
+st = ''
+num = []
+result = 0
+
+print('''请输入一个n阶方阵，数字之间用空格隔开，回车输入下一行元素，双回车表示结束\n'\
+    '例如： 11 12 14\n \
+            21  22 23\n \
+            31 32 33\n''')
+for line in iter(input, stopword):
+    st = st + line + '\n'
+    print(st)
+row = len(re.findall(r'\n', st))
+
+for x in re.finditer(r'\d+', st):
+    num.append(int(x.group()))
+
+i = 0
+
+for j in range(row):
+    result += num[i]
+    i = i + row +1
+print('主对角线元素和为：', result)
