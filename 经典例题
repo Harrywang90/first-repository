@@ -52,3 +52,21 @@ for j in range(row):
     result += num[i]
     i = i + row +1
 print('主对角线元素和为：', result)
+
+
+
+Python3 中使用 turtle 模块画图
+import turtle
+
+def drawline(n):
+    t=turtle.Pen()
+    t.color(0.3,0.4,0.9)
+    t.begin_fill()
+    for i in range(n):
+        t.forward(50)
+        t.left(360/n)
+    t.end_fill()
+
+if __name__ == '__main__':
+    drawline(10)
+
