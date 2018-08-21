@@ -1,0 +1,49 @@
+
+#!usr/bin/env python 
+# -*- coding:utf-8 -*-
+#注意缩进，缩进缩进
+def login1():
+
+    name = raw_input("Please input your username:")
+    with open("lock.txt",'r') as lock:
+    #    if name in lock.readlines().strip():
+        if name in lock.read().split():
+            print("user %s is locked!" % name)
+            ''' 验证name是否被锁'''
+        else:
+            login = False
+            password = raw_input("Please input passwd:")
+            '''若没被锁，输入密码，三次遍历密码本，查找是否有匹配'''
+            
+            for i in range(3):
+                with open("passwd.txt",'r') as passwd:
+                    for line in passwd.readlines():
+                        line=line.split()
+                        if line[0]==name and line[1]==password:
+                            print(name,line[1])
+                            login=True
+                            
+                            ''' 查找出匹配的name和password，如果找到则登录，并标签改为Trye'''
+                            
+                    if login:
+                        break
+                        
+                    ''' 验证标签，如果为真，则跳出循环 for i in range(3) '''
+                    
+                    else:
+                        print("wrong try again!")
+                        password=raw_input("retry:")
+                        '''验证标签，如果为false，则继续下次循环'''
+                        
+            else:      '''三次循环完，若仍无匹配，else那么执行以下'''
+            
+                print("Try too many times ! now lockedthe user %s" % name)
+                with open("lock.txt", 'a') as lock:
+                    lock.write(name+"\n")
+
+
+
+
+if __name__ =="__main__":
+    login1()
+~               
